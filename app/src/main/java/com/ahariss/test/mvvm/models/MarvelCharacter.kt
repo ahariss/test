@@ -1,6 +1,6 @@
-package com.ahariss.sample.mvvm.models
+package com.ahariss.test.mvvm.models
 
-data class Character(
+data class MarvelCharacter(
     val comics: Comics,
     val description: String,
     val events: Events,

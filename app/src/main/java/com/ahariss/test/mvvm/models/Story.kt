@@ -1,4 +1,4 @@
-package com.ahariss.sample.mvvm.models
+package com.ahariss.test.mvvm.models
 
 data class Story(
     val name: String,

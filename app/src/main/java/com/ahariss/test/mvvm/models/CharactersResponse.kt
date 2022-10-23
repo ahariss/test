@@ -1,4 +1,4 @@
-package com.ahariss.sample.mvvm.models
+package com.ahariss.test.mvvm.models
 
 import com.ahariss.test.base.BaseResponse
 import com.google.gson.annotations.SerializedName
