@@ -26,7 +26,7 @@ class CharactersViewModel @Inject constructor(private val repository: Characters
 
 
 
-    private val _api: MutableLiveData<Resource<CharactersResponse>> = MutableLiveData()
+    private val _api: MutableLiveData<Resource<CharactersResponse>> = MutableLiveData<Resource<CharactersResponse>>().apply { postValue(Resource.Initial) }
     val api: LiveData<Resource<CharactersResponse>>
         get() = _api
 
@@ -38,12 +38,12 @@ class CharactersViewModel @Inject constructor(private val repository: Characters
         if(response is Resource.Success){
             response.value.data?.characters?.let {
                 chars.addAll(it)
-                _characters.value?.toMutableList()?.addAll(chars)
+                _characters.value = chars
                 _api.value = response
             }
-        }else{
-            _api.value = response
         }
+        _api.value = response
+
 
     }
 
