@@ -16,37 +16,38 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor(private val repository: CharactersRepository) :
     ViewModel() {
 
-    private var offset : Int = 0
+    private var offset: Int = 0
 
-    var chars: MutableList<MarvelCharacter>  = mutableListOf()
+    private var hasMore= true
+
 
     private val _characters: MutableLiveData<List<MarvelCharacter>> = MutableLiveData()
     val characters: LiveData<List<MarvelCharacter>>
         get() = _characters
 
-
-
-    private val _api: MutableLiveData<Resource<CharactersResponse>> = MutableLiveData<Resource<CharactersResponse>>().apply { postValue(Resource.Initial) }
+    private val _api: MutableLiveData<Resource<CharactersResponse>> =
+        MutableLiveData<Resource<CharactersResponse>>().apply { postValue(Resource.Initial) }
     val api: LiveData<Resource<CharactersResponse>>
         get() = _api
 
 
-
     fun getCharacters() = viewModelScope.launch {
-        _api.value = Resource.Loading
-        val response : Resource<CharactersResponse> = repository.getCharacters(offset);
-        if(response is Resource.Success){
-            response.value.data?.characters?.let {
-                chars.addAll(it)
-                _characters.value = chars
-                _api.value = response
+        if(hasMore){
+            _api.value = Resource.Loading
+            val response: Resource<CharactersResponse> = repository.getCharacters(offset);
+            if (response is Resource.Success) {
+                response.value.data?.characters?.let {
+                    offset = offset + it.size
+                    hasMore = response.value.data.offset + response.value.data.count < response.value.data.total
+                    _api.value = response
+                }
             }
+            _api.value = response
         }
-        _api.value = response
+
 
 
     }
-
 
 
 }
