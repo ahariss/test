@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 
 class CharactersResponse : BaseResponse() {
     @SerializedName("data")
-    val data: CharactersData? = null
+    var data: CharactersData? = null
 
 }

@@ -98,7 +98,7 @@ class CharactersFragment : Fragment() {
                 is Resource.Failure -> {
 
                 }
-                Resource.Initial -> viewModel.getCharacters()
+                Resource.Initial -> viewModel.getCharacters(true)
 
                 is Resource.Success -> {
                     it.value.data?.characters?.let { characters ->

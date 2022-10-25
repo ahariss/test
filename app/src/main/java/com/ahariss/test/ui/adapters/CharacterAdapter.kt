@@ -43,7 +43,7 @@ class CharacterAdapter() : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.textView.text = characters.get(position).name
-        var img = "${characters.get(position).thumbnail.path}.${characters.get(position).thumbnail.extension}"
+        val img = "${characters.get(position).thumbnail.path}.${characters.get(position).thumbnail.extension}"
         println(img)
         Picasso.get().load(img).into(viewHolder.imageView)
 

@@ -31,15 +31,27 @@ class CharactersViewModel @Inject constructor(private val repository: Characters
         get() = _api
 
 
-    fun getCharacters() = viewModelScope.launch {
+    fun getCharacters(loadfromCache: Boolean = false) = viewModelScope.launch {
+        //loadFrom local database for first time
+        if(loadfromCache){
+            val response: Resource<CharactersResponse> = repository.getCharactersLocal();
+            if(response is Resource.Success){
+                offset = response.value.data?.offset!!
+                _api.value = response
+            }
+        }
+
         if(hasMore){
-            _api.value = Resource.Loading
+            if(offset==0) {
+                _api.value = Resource.Loading
+            }
             val response: Resource<CharactersResponse> = repository.getCharacters(offset);
             if (response is Resource.Success) {
                 response.value.data?.characters?.let {
                     offset = offset + it.size
-                    hasMore = response.value.data.offset + response.value.data.count < response.value.data.total
+                    hasMore = response.value.data!!.offset + response.value.data!!.count < response.value.data!!.total
                     _api.value = response
+                    repository.saveCharacters(it)
                 }
             }
             _api.value = response

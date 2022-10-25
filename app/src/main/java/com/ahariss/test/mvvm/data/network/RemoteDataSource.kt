@@ -18,8 +18,6 @@ import javax.inject.Inject
 
 
 class RemoteDataSource @Inject constructor() {
-
-
     private val TIMEOUT: Long = 30 //in seconds
 
 
