@@ -12,13 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ahariss.test.databinding.FragmentCharactersBinding
 import com.ahariss.test.mvvm.data.network.Resource
+import com.ahariss.test.mvvm.di.MainAcitvityImp
 import com.ahariss.test.ui.adapters.CharacterAdapter
 import com.ahariss.test.utils.visible
 import com.ahariss.test.viewmodels.CharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
+
+    @Inject
+    lateinit var mainAcitvityImp: MainAcitvityImp
 
     private var _binding: FragmentCharactersBinding? = null
 
@@ -27,7 +32,7 @@ class CharactersFragment : Fragment() {
     private val viewModel: CharactersViewModel by viewModels()
 
 
-    val adapter = CharacterAdapter()
+    lateinit var adapter : CharacterAdapter
 
     private lateinit var linearLayoutManager : LinearLayoutManager
 
@@ -61,6 +66,7 @@ class CharactersFragment : Fragment() {
     }
 
     private fun setupUI() {
+        adapter = CharacterAdapter(mainAcitvityImp.callback)
         linearLayoutManager = LinearLayoutManager(requireContext())
         binding.list.apply {
             this.layoutManager = linearLayoutManager

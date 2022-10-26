@@ -9,11 +9,12 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.ahariss.test.R
+import com.ahariss.test.mvvm.di.MainAcitvityImp
 import com.ahariss.test.mvvm.models.MarvelCharacter
 import com.squareup.picasso.Picasso
 
 
-class CharacterAdapter() : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
+class CharacterAdapter(private val callback:MainAcitvityImp.Callback?) : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
     var characters: List<MarvelCharacter> = mutableListOf()
 
@@ -43,9 +44,11 @@ class CharacterAdapter() : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.textView.text = characters.get(position).name
-        val img = "${characters.get(position).thumbnail.path}.${characters.get(position).thumbnail.extension}"
-        println(img)
+        val img = "${characters.get(position).thumbnail?.path}.${characters.get(position).thumbnail?.extension}"
         Picasso.get().load(img).into(viewHolder.imageView)
+        viewHolder.itemView.setOnClickListener {
+            callback?.openCharacterDetails(characters.get(position))
+        }
 
 
     }

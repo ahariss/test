@@ -49,7 +49,7 @@ class CharactersViewModel @Inject constructor(private val repository: Characters
             if (response is Resource.Success) {
                 response.value.data?.characters?.let {
                     offset = offset + it.size
-                    hasMore = response.value.data!!.offset + response.value.data!!.count < response.value.data!!.total
+                    hasMore = response.value.data!!.offset + response.value.data?.count!! < response.value.data!!.total
                     _api.value = response
                     repository.saveCharacters(it)
                 }

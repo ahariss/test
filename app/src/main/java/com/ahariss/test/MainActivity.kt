@@ -9,12 +9,16 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.NavDirections
 import com.ahariss.test.databinding.ActivityMainBinding
+import com.ahariss.test.mvvm.di.MainAcitvityImp
+import com.ahariss.test.mvvm.models.MarvelCharacter
+import com.ahariss.test.ui.CharactersFragmentDirections
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainAcitvityImp.Callback {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -32,25 +36,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun openCharacterDetails(marvelCharacter: MarvelCharacter) {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+        navController.navigate(CharactersFragmentDirections.actionFirstFragmentToSecondFragment(marvelCharacter,marvelCharacter.id.toString()))
     }
 }
