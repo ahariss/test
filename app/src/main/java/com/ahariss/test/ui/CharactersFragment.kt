@@ -98,6 +98,12 @@ class CharactersFragment : Fragment() {
 
     private fun setupObservers() {
 
+        viewModel.characters.observe(viewLifecycleOwner, Observer {
+            it?.let { characters ->
+                adapter.setCharactersList(characters)
+            }
+        })
+
         viewModel.api.observe(viewLifecycleOwner, Observer {
             binding.loader.root.visible(it is Resource.Loading)
             when (it){
@@ -105,11 +111,7 @@ class CharactersFragment : Fragment() {
 
                 }
                 Resource.Initial -> viewModel.getCharacters(true)
-
                 is Resource.Success -> {
-                    it.value.data?.characters?.let { characters ->
-                        adapter.setCharactersList(characters)
-                    }
 
                 }
                 else -> {

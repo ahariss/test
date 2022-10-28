@@ -19,6 +19,7 @@ class CharactersViewModel @Inject constructor(private val repository: Characters
     private var offset: Int = 0
 
     private var hasMore= true
+    private var chars : MutableList<MarvelCharacter> = mutableListOf()
 
 
     private val _characters: MutableLiveData<List<MarvelCharacter>> = MutableLiveData()
@@ -33,10 +34,13 @@ class CharactersViewModel @Inject constructor(private val repository: Characters
 
     fun getCharacters(loadfromCache: Boolean = false) = viewModelScope.launch {
         //loadFrom local database for first time
+
         if(loadfromCache){
             val response: Resource<CharactersResponse> = repository.getCharactersLocal();
             if(response is Resource.Success){
                 offset = response.value.data?.offset!!
+                chars.addAll(response.value.data?.characters!!)
+                _characters.value = chars
                 _api.value = response
             }
         }
@@ -50,6 +54,8 @@ class CharactersViewModel @Inject constructor(private val repository: Characters
                 response.value.data?.characters?.let {
                     offset = offset + it.size
                     hasMore = response.value.data!!.offset + response.value.data?.count!! < response.value.data!!.total
+                    chars.addAll(response.value.data?.characters!!)
+                    _characters.value = chars
                     _api.value = response
                     repository.saveCharacters(it)
                 }
