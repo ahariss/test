@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahariss.test.R
 import com.ahariss.test.mvvm.di.MainAcitvityImp
 import com.ahariss.test.mvvm.models.MarvelCharacter
+import com.google.android.material.imageview.ShapeableImageView
 import com.squareup.picasso.Picasso
 
 
@@ -26,7 +27,7 @@ class CharacterAdapter(private val callback:MainAcitvityImp.Callback?) : Recycle
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
-        val imageView: AppCompatImageView
+        val imageView: ShapeableImageView
 
         init {
             // Define click listener for the ViewHolder's View.

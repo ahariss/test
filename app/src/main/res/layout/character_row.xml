@@ -10,10 +10,15 @@
     android:layout_height="wrap_content">
 
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"
+        android:padding="1dp"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:scaleType="centerCrop"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp"
+        app:shapeAppearanceOverlay="@style/circleImageView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
