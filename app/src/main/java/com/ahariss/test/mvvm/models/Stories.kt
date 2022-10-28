@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class Stories(
     val available: Int?,
     val collectionURI: String?,
-    val items: List<Story>?,
+    val items: List<Item>?,
     val returned: Int?
 ) : Parcelable
