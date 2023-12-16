@@ -20,7 +20,7 @@ class CharacterDetailFragment : Fragment() {
     private var _binding: FragmentCharacterDetailBinding? = null
 
     val args: CharacterDetailFragmentArgs by navArgs()
-    lateinit var adapter: CollectionAdapter
+    lateinit var adapter: CollectionAdapterint x =1
 
 
     // This property is only valid between onCreateView and
